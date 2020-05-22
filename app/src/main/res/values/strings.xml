@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Sol</string>
+
+    <string name="get_last_location_text">Waiting for button press...</string>
+    <string name="get_last_location_button">Get last known location</string>
+
+    <!-- location permission alert dialogs -->
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="permissions_req_dialog_title">Location Permissions</string>
+    <string name="permissions_req_dialog_message">In order to personalize information to your device\'s current location, you must allow the app permission to access your current location when the app is in the foreground.</string>
 </resources>
