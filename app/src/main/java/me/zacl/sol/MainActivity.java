@@ -16,7 +16,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 public class MainActivity extends AppCompatActivity {
 
-   private static final int                         PERMISSION_REQUEST_FINE_LOCATION = 0;
+   private static final int                         PERMISSION_REQUEST_COARSE_LOCATION = 0;
    private              FusedLocationProviderClient fusedLocationClient;
 
    private TextView lastLocationTextView;
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
    }
 
    private void getLastKnownLocation() {
-      if ((ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) ==
+      if ((ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) ==
           PackageManager.PERMISSION_GRANTED)) {
          fusedLocationClient.getLastLocation()
                             .addOnSuccessListener(this, new OnSuccessListener<Location>() {
@@ -60,8 +60,8 @@ public class MainActivity extends AppCompatActivity {
    }
 
    private void requestLocationPermission() {
-      AlertDialog         dialog;
-      AlertDialog.Builder builder = new AlertDialog.Builder(this);
+      AlertDialog               alertDialog;
+      final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
       builder.setMessage(R.string.permissions_req_dialog_message)
              .setTitle(R.string.permissions_req_dialog_title);
@@ -70,16 +70,27 @@ public class MainActivity extends AppCompatActivity {
          @Override
          public void onClick(DialogInterface dialog, int which) {
             ActivityCompat.requestPermissions(MainActivity.this, new String[] {
-                Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_FINE_LOCATION);
+                Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_REQUEST_COARSE_LOCATION);
          }
       });
 
+      builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+         @Override
+         public void onClick(DialogInterface dialog, int which) {
+            dialog.dismiss();
+         }
+      });
+
+      alertDialog = builder.create();
+
       if (ActivityCompat.shouldShowRequestPermissionRationale(
-          this, Manifest.permission.ACCESS_FINE_LOCATION)) {
-         builder.create();
-      } else {
+          this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
+         alertDialog.show();
+      }
+      else {
          ActivityCompat.requestPermissions(MainActivity.this, new String[] {
-             Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_FINE_LOCATION);
+             Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_REQUEST_COARSE_LOCATION);
       }
    }
+
 }
